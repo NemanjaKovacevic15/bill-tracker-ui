@@ -14,9 +14,8 @@ export function BillBrowserContainer(): React.ReactElement {
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedSponsor, setSelectedSponsor] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalBills, setTotalBills] = useState(0);
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
-  const [activeTab, setActiveTab] = useState(0); // 0 = All, 1 = Favourites
+  const [activeTab, setActiveTab] = useState(0); 
 
   const { favourites } = useContext(FavouritesContext) ?? { favourites: [] };
 
@@ -26,18 +25,15 @@ export function BillBrowserContainer(): React.ReactElement {
     async function loadBills(): Promise<void> {
       try {
         if (activeTab === 0) {
-          const { bills, total } = await fetchBillsFromApi({
-            limit: itemsPerPage,
-            skip: (currentPage - 1) * itemsPerPage,
-            bill_type: selectedType || undefined,
+          const { bills } = await fetchBillsFromApi({
+            limit: 1000, 
+            skip: 0,
             bill_status: selectedStatus || undefined,
             sponsor: selectedSponsor || undefined,
           });
           setBills(bills);
-          setTotalBills(total);
         } else {
           setBills(favourites);
-          setTotalBills(favourites.length);
         }
       } catch (error) {
         console.error('Failed to load bills:', error);
@@ -45,13 +41,19 @@ export function BillBrowserContainer(): React.ReactElement {
     }
 
     loadBills();
-  }, [currentPage, selectedType, selectedStatus, selectedSponsor, activeTab, favourites]);
+  }, [selectedStatus, selectedSponsor, activeTab, favourites]);
 
-  const totalPages = Math.ceil(totalBills / itemsPerPage);
-  const currentItems =
-    activeTab === 1
-      ? bills.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-      : bills;
+  function applyLocalFilters(allBills: Bill[]): Bill[] {
+    return allBills.filter((bill) =>
+      (!selectedType || bill.bill_type === selectedType) &&
+      (!selectedStatus || bill.status === selectedStatus) &&
+      (!selectedSponsor || bill.sponsor === selectedSponsor)
+    );
+  }
+
+  const filteredBills = applyLocalFilters(bills);
+  const totalPages = Math.ceil(filteredBills.length / itemsPerPage);
+  const paginatedBills = filteredBills.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   function handleFilterChange(filters: {
     type: string;
@@ -102,7 +104,7 @@ export function BillBrowserContainer(): React.ReactElement {
         onFilterChange={handleFilterChange}
       />
 
-      <BillTable bills={currentItems} onRowClick={handleRowClick} />
+      <BillTable bills={paginatedBills} onRowClick={handleRowClick} />
 
       <PaginationControls
         currentPage={currentPage}
