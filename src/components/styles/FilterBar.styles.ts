@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import { FormControl } from '@mui/material';
+import { Box, FormControl } from '@mui/material';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled(Box)`
   display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
 `;
 
 export const StyledFormControl = styled(FormControl)`
-  min-width: 200px;
+  min-width: 160px; 
+  flex: 1 1 auto;
 `;
