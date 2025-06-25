@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogTitle, Tabs, Tab, Typography } from '@mui/material';
 import { Bill } from '../types/Bill';
-import { StyledTabPanel } from './styles/StyledBillModal';
+import { StyledTabPanel } from './styles/BillModal.styles';
 
 
 interface BillModalProps {

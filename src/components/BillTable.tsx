@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { Bill } from '../types/Bill';
 import { FavouriteToggle } from './FavouriteToggle';
-import { StyledTableContainer } from './styles/StyledBillTable';
+import { StyledTableContainer } from './styles/BillTable.styles';
 
 
 interface BillTableProps {

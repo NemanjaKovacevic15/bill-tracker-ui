@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pagination } from '@mui/material';
-import { StyledPaginationContainer } from './styles/StyledPagination';
+import { StyledPaginationContainer } from './styles/Pagination.styles';
 
 
 interface PaginationControlsProps {
