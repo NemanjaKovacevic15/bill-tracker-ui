@@ -6,7 +6,7 @@ import { FilterBar } from '../components/FilterBar';
 import { PaginationControls } from '../components/PaginationControls';
 import { BillModal } from '../components/BillModal';
 import { FavouritesContext } from '../context/FavouritesContext';
-import { fetchBillsFromApi } from '../api/legislation';
+import { fetchBillsFromApi } from '../api/bills';
 
 export function BillBrowserContainer(): React.ReactElement {
   const [bills, setBills] = useState<Bill[]>([]);
