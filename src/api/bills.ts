@@ -18,7 +18,7 @@ export async function fetchBillsFromApi(params: {
   limit: number;
   skip: number;
   bill_type?: string;
-  status?: string;
+  bill_status?: string;
   sponsor?: string;
 }): Promise<{ bills: Bill[]; total: number }> {
   const response = await axios.get('https://api.oireachtas.ie/v1/legislation', { params });

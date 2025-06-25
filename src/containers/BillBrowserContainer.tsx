@@ -30,7 +30,7 @@ export function BillBrowserContainer(): React.ReactElement {
             limit: itemsPerPage,
             skip: (currentPage - 1) * itemsPerPage,
             bill_type: selectedType || undefined,
-            status: selectedStatus || undefined,
+            bill_status: selectedStatus || undefined,
             sponsor: selectedSponsor || undefined,
           });
           setBills(bills);
