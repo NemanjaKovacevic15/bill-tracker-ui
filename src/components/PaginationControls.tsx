@@ -1,12 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { Pagination } from '@mui/material';
+import { StyledPaginationContainer } from './styles/StyledPagination';
 
-const StyledPaginationContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 24px 0;
-`;
 
 interface PaginationControlsProps {
   currentPage: number;

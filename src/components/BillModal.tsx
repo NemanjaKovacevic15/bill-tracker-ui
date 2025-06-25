@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Dialog, DialogContent, DialogTitle, Tabs, Tab, Typography } from '@mui/material';
 import { Bill } from '../types/Bill';
+import { StyledTabPanel } from './styles/StyledBillModal';
 
-const StyledTabPanel = styled.div`
-  padding: 16px 0;
-`;
 
 interface BillModalProps {
   bill: Bill | null;

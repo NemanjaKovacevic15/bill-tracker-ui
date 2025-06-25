@@ -1,11 +1,8 @@
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
-import styled from 'styled-components';
+import { Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import { Bill } from '../types/Bill';
 import { FavouriteToggle } from './FavouriteToggle';
+import { StyledTableContainer } from './styles/StyledBillTable';
 
-const StyledTableContainer = styled((props) => <TableContainer component={Paper} {...props} />)`
-  margin-top: 24px;
-`;
 
 interface BillTableProps {
   bills: Bill[];
@@ -17,7 +14,7 @@ export function BillTable({ bills, onRowClick }: BillTableProps): React.ReactEle
     onRowClick(bill);
   }
 
-  function renderTableRow(bill: Bill): React.ReactElement{
+  function renderTableRow(bill: Bill): React.ReactElement {
     return (
       <TableRow key={bill.id} hover onClick={() => handleRowClick(bill)}>
         <TableCell>{bill.bill_no}</TableCell>
@@ -31,8 +28,8 @@ export function BillTable({ bills, onRowClick }: BillTableProps): React.ReactEle
     );
   }
 
-  return ( 
-    <StyledTableContainer component={Paper}>
+  return (
+    <StyledTableContainer>
       <Table>
         <TableHead>
           <TableRow>

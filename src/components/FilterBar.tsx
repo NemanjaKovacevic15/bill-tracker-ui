@@ -1,24 +1,11 @@
-import styled from 'styled-components';
 import {
-  Box,
-  FormControl,
   InputLabel,
   MenuItem,
   Select,
   SelectChangeEvent,
 } from '@mui/material';
+import { Wrapper, StyledFormControl } from './styles/StyledFilterBar';
 
-const Wrapper = styled(Box)`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 16px;
-  gap: 16px;
-  flex-wrap: wrap;
-`;
-
-const StyledFormControl = styled(FormControl)`
-  min-width: 200px;
-`;
 
 interface FilterBarProps {
   selectedType: string;
@@ -55,7 +42,6 @@ export function FilterBar({
 
   return (
     <Wrapper>
-      {/* Bill Type */}
       <StyledFormControl variant="outlined" size="small">
         <InputLabel id="type-label">Bill Type</InputLabel>
         <Select
@@ -73,7 +59,6 @@ export function FilterBar({
         </Select>
       </StyledFormControl>
 
-      {/* Status */}
       <StyledFormControl variant="outlined" size="small">
         <InputLabel id="status-label">Status</InputLabel>
         <Select
@@ -91,7 +76,6 @@ export function FilterBar({
         </Select>
       </StyledFormControl>
 
-      {/* Sponsor */}
       <StyledFormControl variant="outlined" size="small">
         <InputLabel id="sponsor-label">Sponsor</InputLabel>
         <Select
