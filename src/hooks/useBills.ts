@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Bill } from '../types/Bill';
 import { fetchBillsFromApi, FetchBillsParams } from '../services/bills';
 
@@ -15,28 +15,48 @@ export function useBills(params: Omit<FetchBillsParams, 'limit' | 'skip'>): UseB
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
+  const cacheKey = useMemo(() => {
+    return JSON.stringify({
+      bill_status: params.bill_status,
+      sponsor: params.sponsor,
+      bill_type: params.bill_type
+    });
+  }, [params.bill_status, params.sponsor, params.bill_type]);
+
   useEffect(() => {
-    const key = JSON.stringify(params);
+    let isCancelled = false;
+
     async function load(): Promise<void> {
-      if (cacheRef.current[key]) {
-        setState(cacheRef.current[key]);
+      if (cacheRef.current[cacheKey]) {
+        setState(cacheRef.current[cacheKey]);
         return;
       }
+
       setLoading(true);
       try {
         const result = await fetchBillsFromApi({ limit: 1000, skip: 0, ...params });
-        cacheRef.current[key] = result;
-        setState(result);
-        setError(null);
+        if (!isCancelled) {
+          cacheRef.current[cacheKey] = result;
+          setState(result);
+          setError(null);
+        }
       } catch (err) {
-        setError(err as Error);
+        if (!isCancelled) {
+          setError(err as Error);
+        }
       } finally {
-        setLoading(false);
+        if (!isCancelled) {
+          setLoading(false);
+        }
       }
     }
 
     load();
-  }, [params.bill_status, params.sponsor]);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [cacheKey]);
 
   return { ...state, loading, error };
 }

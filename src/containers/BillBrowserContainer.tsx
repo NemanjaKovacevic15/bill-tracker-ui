@@ -25,6 +25,15 @@ export function BillBrowserContainer(): React.ReactElement {
 
   const displayedBills = activeTab === 0 ? apiBills : favourites;
 
+  const filteredBills = applyLocalFilters(displayedBills);
+
+  const {
+    currentPage,
+    totalPages,
+    paginatedItems: paginatedBills,
+    setCurrentPage
+  } = usePagination(filteredBills, 10);
+
   if (loading && activeTab === 0) {
     return (
       <Box display="flex" justifyContent="center" my={4}>
@@ -41,15 +50,6 @@ export function BillBrowserContainer(): React.ReactElement {
         (!selectedSponsor || bill.sponsor === selectedSponsor)
     );
   }
-
-  const filteredBills = applyLocalFilters(displayedBills);
-
-  const {
-    currentPage,
-    totalPages,
-    paginatedItems: paginatedBills,
-    setCurrentPage
-  } = usePagination(filteredBills, 10);
 
   function handleFilterChange(filters: { type: string; status: string; sponsor: string }): void {
     setSelectedType(filters.type);
