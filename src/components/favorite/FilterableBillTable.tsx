@@ -6,7 +6,7 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
-  Typography,
+  Typography
 } from '@mui/material';
 import { BillTable } from '../bill-table/BillTable';
 import { Bill } from '../../types/Bill';
@@ -26,7 +26,7 @@ export function FilterableBillTable(): React.ReactElement {
         bill_type: r.bill.billType,
         status: r.bill.status,
         sponsor: r.bill.sponsors?.[0]?.by?.showAs ?? 'N/A',
-        ...r.bill,
+        ...r.bill
       }));
       setBills(results);
       setFilteredBills(results);
@@ -58,7 +58,7 @@ export function FilterableBillTable(): React.ReactElement {
             value={selectedBillType}
             label="Type"
             onChange={handleBillTypeChange}
-            sx={{ minWidth: 160 }} 
+            sx={{ minWidth: 160 }}
           >
             <MenuItem value="">All</MenuItem>
             <MenuItem value="Government">Government</MenuItem>
@@ -68,7 +68,7 @@ export function FilterableBillTable(): React.ReactElement {
         </FormControl>
       </Box>
 
-      <BillTable bills={filteredBills} onRowClick={(bill) => console.log('Selected:', bill)} />
+      <BillTable bills={filteredBills} onRowClick={bill => console.log('Selected:', bill)} />
     </>
   );
 }

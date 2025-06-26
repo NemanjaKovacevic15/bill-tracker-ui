@@ -9,6 +9,6 @@ export const Wrapper = styled(Box)`
 `;
 
 export const StyledFormControl = styled(FormControl)`
-  min-width: 160px; 
+  min-width: 160px;
   flex: 1 1 auto;
 `;

@@ -13,11 +13,11 @@ export function FavouritesProvider({ children }: { children: React.ReactNode }) 
   const [favourites, setFavourites] = useState<Bill[]>([]);
 
   function toggleFavourite(bill: Bill): void {
-    setFavourites((prev) => {
-      const exists = prev.find((b) => b.id === bill.id);
+    setFavourites(prev => {
+      const exists = prev.find(b => b.id === bill.id);
       if (exists) {
         console.log(`Mock: Removing favourite for bill ${bill.id}`);
-        return prev.filter((b) => b.id !== bill.id);
+        return prev.filter(b => b.id !== bill.id);
       } else {
         console.log(`Mock: Adding favourite for bill ${bill.id}`);
         return [...prev, bill];
@@ -26,7 +26,7 @@ export function FavouritesProvider({ children }: { children: React.ReactNode }) 
   }
 
   function isFavourite(id: string): boolean {
-    return favourites.some((b) => b.id === id);
+    return favourites.some(b => b.id === id);
   }
 
   return (

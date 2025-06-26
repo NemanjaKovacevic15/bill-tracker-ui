@@ -10,7 +10,7 @@ export function mapApiBill(raw: any): Bill {
     sponsor: bill.sponsors?.[0]?.sponsorPrinted || 'Unknown',
     title_en: bill.shortTitleEn || '-',
     title_ga: bill.shortTitleGa || '-',
-    id: bill.uri || String(Math.random()),
+    id: bill.uri || String(Math.random())
   };
 }
 

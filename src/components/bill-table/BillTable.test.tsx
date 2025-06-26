@@ -10,8 +10,8 @@ const mockBills: Bill[] = [
     status: 'Active',
     sponsor: 'John Doe',
     title_en: 'English Title',
-    title_ga: 'Gaeilge Title',
-  },
+    title_ga: 'Gaeilge Title'
+  }
 ];
 
 describe('BillTable', () => {

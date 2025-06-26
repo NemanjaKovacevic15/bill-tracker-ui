@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogTitle, Tabs, Tab, Typography } from '@mui/
 import { Bill } from '../../types/Bill';
 import { StyledTabPanel } from '../styles/BillModal.styles';
 
-
 interface BillModalProps {
   bill: Bill | null;
   open: boolean;
@@ -17,14 +16,18 @@ export function BillModal({ bill, open, onClose }: BillModalProps): React.ReactE
     setSelectedTab(newValue);
   }
 
-
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>
         {bill?.bill_no} - {bill?.bill_type}
       </DialogTitle>
       <DialogContent>
-        <Tabs value={selectedTab} onChange={handleTabChange} indicatorColor="primary" textColor="primary">
+        <Tabs
+          value={selectedTab}
+          onChange={handleTabChange}
+          indicatorColor="primary"
+          textColor="primary"
+        >
           <Tab label="English" />
           <Tab label="Gaeilge" />
         </Tabs>
@@ -35,8 +38,6 @@ export function BillModal({ bill, open, onClose }: BillModalProps): React.ReactE
             <Typography>{bill?.title_ga}</Typography>
           )}
         </StyledTabPanel>
-
-
       </DialogContent>
     </Dialog>
   );

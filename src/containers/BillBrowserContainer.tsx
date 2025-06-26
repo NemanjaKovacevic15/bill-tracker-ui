@@ -15,7 +15,7 @@ export function BillBrowserContainer(): React.ReactElement {
   const [selectedSponsor, setSelectedSponsor] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
-  const [activeTab, setActiveTab] = useState(0); 
+  const [activeTab, setActiveTab] = useState(0);
 
   const { favourites } = useContext(FavouritesContext) ?? { favourites: [] };
 
@@ -26,10 +26,10 @@ export function BillBrowserContainer(): React.ReactElement {
       try {
         if (activeTab === 0) {
           const { bills } = await fetchBillsFromApi({
-            limit: 1000, 
+            limit: 1000,
             skip: 0,
             bill_status: selectedStatus || undefined,
-            sponsor: selectedSponsor || undefined,
+            sponsor: selectedSponsor || undefined
           });
           setBills(bills);
         } else {
@@ -44,22 +44,22 @@ export function BillBrowserContainer(): React.ReactElement {
   }, [selectedStatus, selectedSponsor, activeTab, favourites]);
 
   function applyLocalFilters(allBills: Bill[]): Bill[] {
-    return allBills.filter((bill) =>
-      (!selectedType || bill.bill_type === selectedType) &&
-      (!selectedStatus || bill.status === selectedStatus) &&
-      (!selectedSponsor || bill.sponsor === selectedSponsor)
+    return allBills.filter(
+      bill =>
+        (!selectedType || bill.bill_type === selectedType) &&
+        (!selectedStatus || bill.status === selectedStatus) &&
+        (!selectedSponsor || bill.sponsor === selectedSponsor)
     );
   }
 
   const filteredBills = applyLocalFilters(bills);
   const totalPages = Math.ceil(filteredBills.length / itemsPerPage);
-  const paginatedBills = filteredBills.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const paginatedBills = filteredBills.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
-  function handleFilterChange(filters: {
-    type: string;
-    status: string;
-    sponsor: string;
-  }): void {
+  function handleFilterChange(filters: { type: string; status: string; sponsor: string }): void {
     setSelectedType(filters.type);
     setSelectedStatus(filters.status);
     setSelectedSponsor(filters.sponsor);
@@ -83,9 +83,9 @@ export function BillBrowserContainer(): React.ReactElement {
     setSelectedBill(null);
   }
 
-  const availableTypes = Array.from(new Set(bills.map((b) => b.bill_type))).filter(Boolean);
-  const availableStatuses = Array.from(new Set(bills.map((b) => b.status))).filter(Boolean);
-  const availableSponsors = Array.from(new Set(bills.map((b) => b.sponsor))).filter(Boolean);
+  const availableTypes = Array.from(new Set(bills.map(b => b.bill_type))).filter(Boolean);
+  const availableStatuses = Array.from(new Set(bills.map(b => b.status))).filter(Boolean);
+  const availableSponsors = Array.from(new Set(bills.map(b => b.sponsor))).filter(Boolean);
 
   return (
     <>

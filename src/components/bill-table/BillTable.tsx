@@ -3,7 +3,6 @@ import { Bill } from '../../types/Bill';
 import { FavouriteToggle } from '../favorite/FavouriteToggle';
 import { StyledTableContainer } from '../styles/BillTable.styles';
 
-
 interface BillTableProps {
   bills: Bill[];
   onRowClick: (bill: Bill) => void;
@@ -40,9 +39,7 @@ export function BillTable({ bills, onRowClick }: BillTableProps): React.ReactEle
             <TableCell>Favourite</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {bills.map(renderTableRow)}
-        </TableBody>
+        <TableBody>{bills.map(renderTableRow)}</TableBody>
       </Table>
     </StyledTableContainer>
   );

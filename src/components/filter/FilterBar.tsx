@@ -1,11 +1,5 @@
-import {
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import { InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { Wrapper, StyledFormControl } from '../styles/FilterBar.styles';
-
 
 interface FilterBarProps {
   selectedType: string;
@@ -14,11 +8,7 @@ interface FilterBarProps {
   availableTypes: string[];
   availableStatuses: string[];
   availableSponsors: string[];
-  onFilterChange: (filters: {
-    type: string;
-    status: string;
-    sponsor: string;
-  }) => void;
+  onFilterChange: (filters: { type: string; status: string; sponsor: string }) => void;
 }
 
 export function FilterBar({
@@ -28,17 +18,17 @@ export function FilterBar({
   availableTypes,
   availableStatuses,
   availableSponsors,
-  onFilterChange,
+  onFilterChange
 }: FilterBarProps): React.ReactElement {
   const handleChange =
     (field: 'type' | 'status' | 'sponsor') =>
-      (event: SelectChangeEvent): void => {
-        onFilterChange({
-          type: field === 'type' ? event.target.value : selectedType,
-          status: field === 'status' ? event.target.value : selectedStatus,
-          sponsor: field === 'sponsor' ? event.target.value : selectedSponsor,
-        });
-      };
+    (event: SelectChangeEvent): void => {
+      onFilterChange({
+        type: field === 'type' ? event.target.value : selectedType,
+        status: field === 'status' ? event.target.value : selectedStatus,
+        sponsor: field === 'sponsor' ? event.target.value : selectedSponsor
+      });
+    };
 
   return (
     <Wrapper>
@@ -51,7 +41,7 @@ export function FilterBar({
           label="Bill Type"
         >
           <MenuItem value="">All</MenuItem>
-          {availableTypes.map((type) => (
+          {availableTypes.map(type => (
             <MenuItem key={type} value={type}>
               {type}
             </MenuItem>
@@ -68,7 +58,7 @@ export function FilterBar({
           label="Status"
         >
           <MenuItem value="">All</MenuItem>
-          {availableStatuses.map((status) => (
+          {availableStatuses.map(status => (
             <MenuItem key={status} value={status}>
               {status}
             </MenuItem>
@@ -85,7 +75,7 @@ export function FilterBar({
           label="Sponsor"
         >
           <MenuItem value="">All</MenuItem>
-          {availableSponsors.map((sponsor) => (
+          {availableSponsors.map(sponsor => (
             <MenuItem key={sponsor} value={sponsor}>
               {sponsor}
             </MenuItem>
