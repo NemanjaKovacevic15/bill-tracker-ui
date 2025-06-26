@@ -1,47 +1,37 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { Tabs, Tab } from '@mui/material';
+import React, { useContext, useState } from 'react';
+import { Tabs, Tab, CircularProgress, Box } from '@mui/material';
 import { Bill } from '../types/Bill';
 import { BillTable } from '../components/bill-table/BillTable';
 import { FilterBar } from '../components/filter/FilterBar';
 import { PaginationControls } from '../components/pagination/PaginationControls';
 import { BillModal } from '../components/bil-modal/BillModal';
 import { FavouritesContext } from '../context/FavouritesContext';
-import { fetchBillsFromApi } from '../api/bills';
+import { useBills } from '../hooks/useBills';
+import { usePagination } from '../hooks/usePagination';
 
 export function BillBrowserContainer(): React.ReactElement {
-  const [bills, setBills] = useState<Bill[]>([]);
   const [selectedType, setSelectedType] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const [selectedSponsor, setSelectedSponsor] = useState('');
-  const [currentPage, setCurrentPage] = useState(1);
   const [selectedBill, setSelectedBill] = useState<Bill | null>(null);
   const [activeTab, setActiveTab] = useState(0);
 
   const { favourites } = useContext(FavouritesContext) ?? { favourites: [] };
 
-  const itemsPerPage = 10;
+  const { bills: apiBills, loading } = useBills({
+    bill_status: selectedStatus || undefined,
+    sponsor: selectedSponsor || undefined
+  });
 
-  useEffect(() => {
-    async function loadBills(): Promise<void> {
-      try {
-        if (activeTab === 0) {
-          const { bills } = await fetchBillsFromApi({
-            limit: 1000,
-            skip: 0,
-            bill_status: selectedStatus || undefined,
-            sponsor: selectedSponsor || undefined
-          });
-          setBills(bills);
-        } else {
-          setBills(favourites);
-        }
-      } catch (error) {
-        console.error('Failed to load bills:', error);
-      }
-    }
+  const displayedBills = activeTab === 0 ? apiBills : favourites;
 
-    loadBills();
-  }, [selectedStatus, selectedSponsor, activeTab, favourites]);
+  if (loading && activeTab === 0) {
+    return (
+      <Box display="flex" justifyContent="center" my={4}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   function applyLocalFilters(allBills: Bill[]): Bill[] {
     return allBills.filter(
@@ -52,12 +42,14 @@ export function BillBrowserContainer(): React.ReactElement {
     );
   }
 
-  const filteredBills = applyLocalFilters(bills);
-  const totalPages = Math.ceil(filteredBills.length / itemsPerPage);
-  const paginatedBills = filteredBills.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const filteredBills = applyLocalFilters(displayedBills);
+
+  const {
+    currentPage,
+    totalPages,
+    paginatedItems: paginatedBills,
+    setCurrentPage
+  } = usePagination(filteredBills, 10);
 
   function handleFilterChange(filters: { type: string; status: string; sponsor: string }): void {
     setSelectedType(filters.type);
@@ -83,9 +75,9 @@ export function BillBrowserContainer(): React.ReactElement {
     setSelectedBill(null);
   }
 
-  const availableTypes = Array.from(new Set(bills.map(b => b.bill_type))).filter(Boolean);
-  const availableStatuses = Array.from(new Set(bills.map(b => b.status))).filter(Boolean);
-  const availableSponsors = Array.from(new Set(bills.map(b => b.sponsor))).filter(Boolean);
+  const availableTypes = Array.from(new Set(displayedBills.map(b => b.bill_type))).filter(Boolean);
+  const availableStatuses = Array.from(new Set(displayedBills.map(b => b.status))).filter(Boolean);
+  const availableSponsors = Array.from(new Set(displayedBills.map(b => b.sponsor))).filter(Boolean);
 
   return (
     <>

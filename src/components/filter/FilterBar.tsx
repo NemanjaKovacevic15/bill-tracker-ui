@@ -22,13 +22,13 @@ export function FilterBar({
 }: FilterBarProps): React.ReactElement {
   const handleChange =
     (field: 'type' | 'status' | 'sponsor') =>
-      (event: SelectChangeEvent): void => {
-        onFilterChange({
-          type: field === 'type' ? event.target.value : selectedType,
-          status: field === 'status' ? event.target.value : selectedStatus,
-          sponsor: field === 'sponsor' ? event.target.value : selectedSponsor
-        });
-      };
+    (event: SelectChangeEvent): void => {
+      onFilterChange({
+        type: field === 'type' ? event.target.value : selectedType,
+        status: field === 'status' ? event.target.value : selectedStatus,
+        sponsor: field === 'sponsor' ? event.target.value : selectedSponsor
+      });
+    };
 
   return (
     <Wrapper>

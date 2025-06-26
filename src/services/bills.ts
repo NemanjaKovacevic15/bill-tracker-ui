@@ -1,7 +1,19 @@
 import axios from 'axios';
 import { Bill } from '../types/Bill';
 
-export function mapApiBill(raw: any): Bill {
+export interface RawApiBill {
+  bill: {
+    billNo?: string;
+    billType?: string;
+    status?: string;
+    sponsors?: Array<{ sponsorPrinted?: string }>;
+    shortTitleEn?: string;
+    shortTitleGa?: string;
+    uri?: string;
+  };
+}
+
+export function mapApiBill(raw: RawApiBill): Bill {
   const bill = raw.bill;
   return {
     bill_no: bill.billNo || '-',
@@ -14,13 +26,18 @@ export function mapApiBill(raw: any): Bill {
   };
 }
 
-export async function fetchBillsFromApi(params: {
+export interface FetchBillsParams {
   limit: number;
   skip: number;
   bill_type?: string;
   bill_status?: string;
   sponsor?: string;
-}): Promise<{ bills: Bill[]; total: number }> {
+}
+
+export async function fetchBillsFromApi(params: FetchBillsParams): Promise<{
+  bills: Bill[];
+  total: number;
+}> {
   const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/legislation`, { params });
   const results = response.data.results || [];
   const bills = results.map(mapApiBill);
