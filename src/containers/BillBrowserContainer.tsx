@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Tabs, Tab } from '@mui/material';
 import { Bill } from '../types/Bill';
-import { BillTable } from '../components/BillTable';
-import { FilterBar } from '../components/FilterBar';
-import { PaginationControls } from '../components/PaginationControls';
-import { BillModal } from '../components/BillModal';
+import { BillTable } from '../components/bill-table/BillTable';
+import { FilterBar } from '../components/filter/FilterBar';
+import { PaginationControls } from '../components/pagination/PaginationControls';
+import { BillModal } from '../components/bil-modal/BillModal';
 import { FavouritesContext } from '../context/FavouritesContext';
 import { fetchBillsFromApi } from '../api/bills';
 

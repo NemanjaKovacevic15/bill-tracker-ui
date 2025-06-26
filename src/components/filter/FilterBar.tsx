@@ -4,7 +4,7 @@ import {
   Select,
   SelectChangeEvent,
 } from '@mui/material';
-import { Wrapper, StyledFormControl } from './styles/FilterBar.styles';
+import { Wrapper, StyledFormControl } from '../styles/FilterBar.styles';
 
 
 interface FilterBarProps {
