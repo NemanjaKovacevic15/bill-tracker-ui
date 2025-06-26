@@ -21,7 +21,7 @@ export async function fetchBillsFromApi(params: {
   bill_status?: string;
   sponsor?: string;
 }): Promise<{ bills: Bill[]; total: number }> {
-  const response = await axios.get('https://api.oireachtas.ie/v1/legislation', { params });
+  const response = await axios.get(`${process.env.REACT_APP_BASE_URL}/legislation`, { params });
   const results = response.data.results || [];
   const bills = results.map(mapApiBill);
   const total = response.data.head?.counts?.resultCount || 0;
